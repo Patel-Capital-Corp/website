@@ -1,0 +1,42 @@
+{
+  "name": "patel-capital-corp-website",
+  "version": "1.0.0",
+  "description": "Immersive 3D website for Patel Capital Corp featuring advanced financial solutions powered by AI and data science",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server . -p 12000 -c-1 --cors",
+    "start": "npx http-server . -p 12000 -c-1 --cors",
+    "build": "echo 'Build process would optimize assets here'",
+    "test": "echo 'Tests would run here'",
+    "lint": "echo 'Linting would run here'"
+  },
+  "keywords": [
+    "finance",
+    "capital-markets",
+    "3d-website",
+    "threejs",
+    "gsap",
+    "webgl",
+    "interactive",
+    "immersive",
+    "ai",
+    "data-science"
+  ],
+  "author": "Patel Capital Corp",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "three": "^0.155.0",
+    "gsap": "^3.12.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Patel-Capital-Corp/website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Patel-Capital-Corp/website/issues"
+  },
+  "homepage": "https://patelcapitalcorp.com"
+}
