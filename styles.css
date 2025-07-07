@@ -1,0 +1,247 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0a0a0a;
+    color: #fafafa;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #141414;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header .tagline {
+    font-size: 1.2em;
+    margin: 5px 0;
+}
+
+header .slogan {
+    font-size: 1.5em;
+    margin: 5px 0;
+}
+
+header .logo {
+    width: 100px;
+    height: auto;
+    margin-top: 10px;
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #1a1a1a;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fafafa;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+nav ul li a:hover {
+    color: #32ff7e;
+}
+
+/* Main Content Styles */
+main {
+    padding: 20px;
+}
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h2 {
+    color: #32ff7e;
+}
+
+p {
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+/* Section Specific Styles */
+#homepage {
+    text-align: center;
+}
+
+.seesaw-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+.seesaw {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+}
+
+.human-figure,
+.dollar-ball,
+.beam {
+    position: absolute;
+}
+
+.human-figure {
+    width: 100px;
+    height: 200px;
+    background-color: #32ff7e;
+    top: 0;
+    left: 0;
+}
+
+.dollar-ball {
+    width: 100px;
+    height: 100px;
+    background-color: #ffd700;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+}
+
+.beam {
+    width: 2px;
+    height: 200px;
+    background-color: #32ff7e;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #32ff7e;
+    color: #0a0a0a;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 10px;
+}
+
+button:hover {
+    background-color: #28f574;
+}
+
+/* Rocket Page Styles */
+#rocket-page {
+    position: relative;
+    text-align: center;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+}
+
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Debt Capital Styles */
+#debt-capital,
+#equity-capital,
+#partnership-process,
+#contact,
+#about,
+#team,
+#history,
+#branding,
+#services {
+    text-align: left;
+}
+
+.services h3,
+.case-studies h3 {
+    color: #32ff7e;
+}
+
+.services ul,
+.case-studies ul {
+    list-style: none;
+    padding: 0;
+}
+
+.services ul li,
+.case-studies ul li {
+    margin: 5px 0;
+}
+
+.case-study {
+    margin: 20px 0;
+}
+
+/* Contact Information Styles */
+#contact {
+    text-align: center;
+}
+
+#contact p {
+    margin: 10px 0;
+}
+
+#contact h3 {
+    color: #32ff7e;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+
+    header .tagline,
+    header .slogan {
+        font-size: 1em;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    nav ul li a {
+        font-size: 1em;
+    }
+
+    .content {
+        padding: 10px;
+    }
+
+    button {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+}
