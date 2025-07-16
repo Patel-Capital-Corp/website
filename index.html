@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patel Capital Corp - Engineering Creative Finance</title>
+    <meta name="description" content="Patel Capital Markets (PCM) stands apart in commercial real estate capital markets, renowned for solving complex capital challenges through advanced data science and AI.">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="./assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./assets/images/logo-transparent.png" as="image">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./css/main.css">
+    
+    <!-- Critical CSS inlined -->
+    <style>
+        /* Critical CSS for immediate render */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            cursor: none;
+        }
+        
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 1s ease-out;
+        }
+        
+        .loading-logo {
+            width: 120px;
+            height: 120px;
+            opacity: 0;
+            animation: logoFadeIn 2s ease-out forwards;
+        }
+        
+        @keyframes logoFadeIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        #viewport-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        #three-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #32ff7e 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            transition: transform 0.1s ease-out;
+        }
+        
+        .cursor-trail {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #32ff7e;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.6;
+        }
+    </style>
+    
+    <!-- Schema markup for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FinancialService",
+        "name": "Patel Capital Corp",
+        "alternateName": "Patel Capital Markets",
+        "description": "Commercial real estate capital markets firm specializing in debt and equity capital solutions powered by advanced data science and AI.",
+        "url": "https://patelcapitalcorp.com",
+        "logo": "https://patelcapitalcorp.com/assets/images/logo.png",
+        "sameAs": [
+            "https://linkedin.com/company/patel-capital-corp",
+            "https://twitter.com/patelcapital"
+        ],
+        "address": [
+            {
+                "@type": "PostalAddress",
+                "streetAddress": "123 Financial District, Suite 456",
+                "addressLocality": "New York",
+                "addressRegion": "NY",
+                "postalCode": "10001",
+                "addressCountry": "US"
+            }
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-555-123-4567",
+            "contactType": "customer service",
+            "email": "info@patelcapitalcorp.com"
+        },
+        "founder": {
+            "@type": "Person",
+            "name": "Patel Capital Team"
+        },
+        "slogan": "Control The Leverage"
+    }
+    </script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <svg class="loading-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Simplified logo for loading -->
+            <circle cx="60" cy="60" r="50" stroke="#32ff7e" stroke-width="2" fill="none" opacity="0.3"/>
+            <circle cx="60" cy="60" r="30" fill="#32ff7e" opacity="0.6"/>
+            <text x="60" y="65" text-anchor="middle" fill="#000000" font-size="24" font-weight="bold">$</text>
+        </svg>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+
+    <!-- Main Viewport Container -->
+    <div id="viewport-container">
+        <!-- Three.js Canvas -->
+        <canvas id="three-canvas"></canvas>
+        
+        <!-- UI Overlay Layer -->
+        <div id="ui-overlay">
+            <!-- Homepage UI -->
+            <section id="homepage-ui" class="ui-section active">
+                <header class="main-header">
+                    <div class="logo-container">
+                        <div class="header-logo-svg">
+                            <svg width="60" height="60" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Seesaw Base -->
+                                <circle cx="60" cy="90" r="25" stroke="#32ff7e" stroke-width="2" fill="none" opacity="0.3"/>
+                                <path d="M 40 90 Q 60 85 80 90" stroke="#32ff7e" stroke-width="2" fill="none"/>
+                                
+                                <!-- Fulcrum -->
+                                <rect x="55" y="75" width="10" height="15" fill="#3a3a3a"/>
+                                
+                                <!-- Seesaw Beam (tilted) -->
+                                <line x1="20" y1="70" x2="100" y2="80" stroke="#3a3a3a" stroke-width="4"/>
+                                
+                                <!-- Human Figure (left side, higher) -->
+                                <circle cx="30" cy="60" r="6" fill="#32ff7e"/>
+                                <rect x="27" y="66" width="6" height="12" fill="#32ff7e"/>
+                                <line x1="24" y1="72" x2="36" y2="72" stroke="#32ff7e" stroke-width="2"/>
+                                <line x1="27" y1="78" x2="27" y2="85" stroke="#32ff7e" stroke-width="2"/>
+                                <line x1="33" y1="78" x2="33" y2="85" stroke="#32ff7e" stroke-width="2"/>
+                                
+                                <!-- Dollar Ball (right side, lower) -->
+                                <circle cx="90" cy="85" r="12" fill="#32ff7e" opacity="0.8"/>
+                                <text x="90" y="90" text-anchor="middle" fill="#000000" font-size="16" font-weight="bold">$</text>
+                                
+                                <!-- Rotation Arrow -->
+                                <path d="M 45 95 Q 60 100 75 95" stroke="#32ff7e" stroke-width="1" fill="none" opacity="0.5"/>
+                                <polygon points="75,95 78,93 78,97" fill="#32ff7e" opacity="0.5"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                        <button class="nav-item" data-section="about">About</button>
+                        <button class="nav-item" data-section="services">Services</button>
+                        <button class="nav-item" data-section="team">Team</button>
+                        <button class="nav-item" data-section="contact">Contact</button>
+                    </nav>
+                </header>
+
+                <div class="hero-content">
+                    <div class="company-branding">
+                        <h1 class="company-name">PATEL CAPITAL CORP</h1>
+                        <p class="tagline">Engineering Creative Finance</p>
+                        <p class="slogan">Control The Leverage</p>
+                    </div>
+
+                    <div class="interactive-blocks">
+                        <div class="capital-block debt-block">
+                            <h3>Debt capital markets expertise</h3>
+                            <p>Navigate the complexities of debt financing with confidence.</p>
+                            <button class="cta-button lever-up-btn" id="lever-up" aria-label="Explore Debt Capital Services">
+                                Lever Up
+                            </button>
+                        </div>
+
+                        <div class="capital-block equity-block">
+                            <h3>Equity capital markets strategies</h3>
+                            <p>Elevate your capital-raising efforts with tailored equity solutions.</p>
+                            <button class="cta-button raise-world-btn" id="raise-world" aria-label="Explore Equity Capital Services">
+                                Raise The World
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator">
+                    <div class="scroll-text">Scroll to explore</div>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </section>
+
+            <!-- Rocket Page UI -->
+            <section id="rocket-ui" class="ui-section">
+                <div class="rocket-background">
+                    <div class="rocket-animation">
+                        <div class="rocket">🚀</div>
+                        <div class="exhaust"></div>
+                    </div>
+                    <div class="data-particles"></div>
+                </div>
+                <div class="rocket-content">
+                    <div class="rocket-text">
+                        <h2>LEVERAGING ADVANCED DATA SCIENCE AND AI TECHNOLOGY</h2>
+                        <h3>Tailored strategies for your success</h3>
+                        <p>At Patel Capital Corp, we redefine finance through innovative solutions powered by advanced data science and AI technology. Our expert team specializes in structured finance, debt capital markets, and equity capital markets, delivering bespoke financial strategies that align with your unique objectives. With a commitment to risk management and optimized returns, we offer comprehensive guidance tailored to navigate the complexities of today's financial landscape. Experience unparalleled support and insights that drive your financial success with Patel Capital Corp.</p>
+                        <button class="cta-button contact-btn" data-section="contact">Get in touch</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Debt Capital Section UI -->
+            <section id="debt-ui" class="ui-section">
+                <div class="section-content">
+                    <header class="section-header">
+                        <h2>Debt Capital Markets</h2>
+                        <div class="section-subtitle">Comprehensive debt financing solutions</div>
+                    </header>
+                    
+                    <div class="content-grid">
+                        <div class="content-block">
+                            <h3>Market Leadership</h3>
+                            <p>Patel Capital Corp stands as a distinguished leader in both debt and equity capital markets, wielding extensive experience to deliver comprehensive solutions tailored to meet the unique financial goals of each client. The firm's profound understanding of these markets enables it to navigate the intricate landscape of funding strategies effectively, ensuring optimal outcomes for its clientele.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Service Portfolio</h3>
+                            <p>With a robust portfolio of services, Patel Capital Corp excels in capital raising, offering clients access to a diverse range of funding options including business loans, working capital, and syndicated debt. The firm's expertise extends to debt capital raise initiatives, where it meticulously structures leveraged loans and business lines of credit to align with the specific needs and growth objectives of businesses.</p>
+                        </div>
+                        
+                        <div class="services-list">
+                            <h3>AI-Powered Services</h3>
+                            <ul>
+                                <li>Leveraged Loans with AI-optimized terms</li>
+                                <li>Syndicated Debt arrangements using predictive analytics</li>
+                                <li>Business Lines of Credit with dynamic pricing models</li>
+                                <li>Working Capital solutions powered by cash flow algorithms</li>
+                                <li>Debt Capital Raises with machine learning deal matching</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <button class="back-button" data-target="homepage">← Back to Home</button>
+                </div>
+            </section>
+
+            <!-- Equity Capital Section UI -->
+            <section id="equity-ui" class="ui-section">
+                <div class="section-content">
+                    <header class="section-header">
+                        <h2>Equity Capital Markets</h2>
+                        <div class="section-subtitle">Strategic equity placement and advisory</div>
+                    </header>
+                    
+                    <div class="content-grid">
+                        <div class="content-block">
+                            <h3>Equity Placement Excellence</h3>
+                            <p>In the realm of equity capital markets, Patel Capital Corp demonstrates its prowess through equity placement services. The firm leverages its extensive network and market insights to identify and seize lucrative investment opportunities, thereby facilitating significant equity capital injections. This strategic equity deployment supports business expansion, innovation, and long-term value creation for stakeholders.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Strategic Advisory</h3>
+                            <p>Furthermore, Patel Capital Corp's capabilities in financial restructuring and strategic advisory are pivotal in guiding clients through complex financial landscapes. The firm provides bespoke advisory services that encompass debt restructuring, asset optimization, and strategic planning. By doing so, Patel Capital Corp ensures that clients can adeptly manage their financial health, mitigate risks, and enhance their overall market position.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Commitment to Success</h3>
+                            <p>Through a combination of seasoned expertise, innovative approaches, and a client-centric philosophy, Patel Capital Corp remains committed to unlocking financial success for its clients. Whether through debt capital markets, equity capital markets, or strategic advisory, the firm's holistic services are designed to foster sustainable growth and enduring prosperity.</p>
+                        </div>
+                    </div>
+                    
+                    <button class="back-button" data-target="homepage">← Back to Home</button>
+                </div>
+            </section>
+
+            <!-- About Section UI -->
+            <section id="about-ui" class="ui-section">
+                <div class="section-content">
+                    <header class="section-header">
+                        <h2>About Patel Capital Corp</h2>
+                        <div class="section-subtitle">Preeminent investment finance firm</div>
+                    </header>
+                    
+                    <div class="content-grid">
+                        <div class="content-block">
+                            <h3>Our Foundation</h3>
+                            <p>Patel Capital Corp stands as a preeminent investment finance firm, renowned for its unwavering commitment to integrity, expertise, and personalized service. With a proven track record in the competitive financial landscape, Patel Capital Corp has cemented its reputation as a trusted partner for both businesses and individuals seeking innovative capital solutions.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Core Operations</h3>
+                            <p>At the core of Patel Capital Corp's operations is a dedication to delivering tailored financial strategies that align with the unique needs and aspirations of their clients. The firm's seasoned professionals possess deep expertise in structured finance, debt capital markets, and equity capital markets, enabling them to offer comprehensive guidance and support across a diverse range of financial services.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Client Benefits</h3>
+                            <p>Clients benefit from an array of solutions including leveraged loans, debt capital, equity capital, and lines of credit, all designed to optimize working capital and drive growth. Patel Capital Corp also is noteworthy in business funding and equity placement, ensuring that companies have access to the necessary resources to achieve their strategic goals.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Technology Integration</h3>
+                            <p>At Patel Capital Corp, the integration of advanced data science and artificial intelligence (AI) technologies forms the backbone of our innovative approach to finance. By harnessing the power of machine learning algorithms and predictive analytics, our team is equipped to offer data-driven insights that are pivotal in navigating the complexities of structured finance, debt capital markets, and equity capital markets.</p>
+                        </div>
+                    </div>
+                    
+                    <button class="back-button" data-target="homepage">← Back to Home</button>
+                </div>
+            </section>
+
+            <!-- Services Section UI -->
+            <section id="services-ui" class="ui-section">
+                <div class="section-content">
+                    <header class="section-header">
+                        <h2>Our Services</h2>
+                        <div class="section-subtitle">Comprehensive financial solutions</div>
+                    </header>
+                    
+                    <div class="content-grid">
+                        <div class="content-block">
+                            <h3>Structured Finance Solutions</h3>
+                            <p>At Patel Capital Corp, our dedicated structured finance team stands at the forefront of financial innovation, offering bespoke financial instruments and strategies designed to meet the unique needs of our clients. Leveraging deep expertise in debt capital markets and equity capital markets, our team is adept at crafting solutions that not only manage risk but also optimize returns.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Securitization</h3>
+                            <p>One of the cornerstone offerings of Patel Capital Corp is securitization. This process involves pooling various financial assets and transforming them into marketable securities, thereby providing liquidity and diversifying risk. For instance, by securitizing loans or receivables, we enable businesses to unlock essential working capital, aiding in business funding and growth.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Asset-Backed Financing</h3>
+                            <p>Another innovative solution we offer is asset-backed financing. This structured finance option allows companies to secure loans using their tangible or intangible assets as collateral. Whether it is leveraging real estate, receivables, or even intellectual property, asset-backed financing provides a vital business line of credit.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Hybrid Financial Products</h3>
+                            <p>Additionally, Patel Capital Corp specializes in developing hybrid financial products, which combine elements of debt and equity to create flexible funding structures. These products are particularly useful in situations requiring a balance between minimizing cost of capital and maintaining capital structure flexibility.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Leveraged Loans</h3>
+                            <p>In the realm of leveraged loans, our expertise ensures that clients can access substantial amounts of capital while maintaining manageable levels of debt. By structuring these loans appropriately, businesses can pursue aggressive growth strategies without compromising their financial stability.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Syndicated Debt</h3>
+                            <p>Our syndicated debt arrangements further illustrate Patel Capital Corp's capacity to orchestrate large-scale debt capital raises by collaborating with a consortium of lenders. This not only spreads risk but also enhances the borrowing capacity of our clients, providing them with the necessary financial muscle to execute large-scale projects.</p>
+                        </div>
+                    </div>
+                    
+                    <button class="back-button" data-target="homepage">← Back to Home</button>
+                </div>
+            </section>
+
+            <!-- Team Section UI -->
+            <section id="team-ui" class="ui-section">
+                <div class="section-content">
+                    <header class="section-header">
+                        <h2>Global Reach, Local Expertise</h2>
+                        <div class="section-subtitle">Strategically positioned across major financial hubs</div>
+                    </header>
+                    
+                    <div class="content-grid">
+                        <div class="content-block">
+                            <h3>Chicago Office - Americas Headquarters</h3>
+                            <p>Our Chicago office serves as the nerve center for North American operations, positioned in the heart of one of the world's most dynamic financial districts. From here, our team manages complex structured finance deals and maintains close relationships with major institutional investors across the Americas.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Oklahoma City Office - Energy & Resources Focus</h3>
+                            <p>Our Oklahoma presence gives us unique insights into energy markets and natural resource investments. This office specializes in financing solutions for the energy sector, leveraging local expertise to structure deals in oil, gas, and renewable energy projects.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Mumbai Office - Asia-Pacific Gateway</h3>
+                            <p>Our Mumbai office connects us to the rapidly growing Asian markets, providing 24/7 coverage and local expertise in one of the world's fastest-growing economies. This strategic location enables us to tap into emerging market opportunities and serve our international client base with culturally nuanced financial solutions.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Collaborative Excellence</h3>
+                            <p>The collaborative approach across our three offices ensures seamless execution of global transactions, with teams working in concert to deliver exceptional results. Our distributed model allows us to combine global perspectives with local market knowledge, providing clients with unparalleled insights and execution capabilities.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Client Success Stories</h3>
+                            <p>Patel Capital Corp has a distinguished track record of providing bespoke financial solutions tailored to the unique needs of its clients. Over the years, the firm has played a pivotal role in enabling businesses to achieve their financial milestones through a variety of innovative services in structured finance, debt capital markets, and equity capital markets.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>How We Work</h3>
+                            <p>Partnering with Patel Capital Corp to unlock your financial success is a streamlined and transparent process designed to meet the unique needs of each client. The journey begins with an initial consultation, where our experienced team will engage in a detailed discussion to understand your financial goals.</p>
+                        </div>
+                    </div>
+                    
+                    <button class="back-button" data-target="homepage">← Back to Home</button>
+                </div>
+            </section>
+
+            <!-- Contact Section UI -->
+            <section id="contact-ui" class="ui-section">
+                <div class="section-content">
+                    <header class="section-header">
+                        <h2>Contact Us</h2>
+                        <div class="section-subtitle">Get in touch with our experts</div>
+                    </header>
+                    
+                    <div class="content-grid">
+                        <div class="content-block">
+                            <h3>Get in Touch</h3>
+                            <p><strong>Phone:</strong> (555) 123-4567</p>
+                            <p><strong>Email:</strong> info@patelcapitalcorp.com</p>
+                            <p><strong>Address:</strong> 123 Financial District, Suite 456, New York, NY 10001</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Office Hours</h3>
+                            <p><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM EST</p>
+                            <p><strong>Saturday:</strong> 10:00 AM - 2:00 PM EST</p>
+                            <p><strong>Sunday:</strong> Closed</p>
+                            <p><strong>Emergency Contact:</strong> Available 24/7 for existing clients</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Social Media</h3>
+                            <p>Connect with us on social media for the latest updates and insights:</p>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin: 0.5rem 0;"><strong>LinkedIn:</strong> /company/patel-capital-corp</li>
+                                <li style="margin: 0.5rem 0;"><strong>Twitter:</strong> @patelcapital</li>
+                                <li style="margin: 0.5rem 0;"><strong>Facebook:</strong> /patelcapitalcorp</li>
+                                <li style="margin: 0.5rem 0;"><strong>Instagram:</strong> @patelcapitalcorp</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Legal Information</h3>
+                            <p><strong>Legal Disclaimers:</strong> The information provided on this website is for informational purposes only and does not constitute financial, investment, or legal advice. Patel Capital Corp makes no representations or warranties, express or implied, as to the accuracy or completeness of the information contained on this site.</p>
+                            <p><strong>Privacy Policy:</strong> Your privacy is important to us. Please review our Privacy Policy to understand how we collect, use, and protect your personal information.</p>
+                        </div>
+                    </div>
+                    
+                    <button class="back-button" data-target="homepage">← Back to Home</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="./js/main.js"></script>
+    
+    <!-- Accessibility -->
+    <div class="sr-only" aria-live="polite" id="screen-reader-announcements"></div>
+    
+    <!-- Skip Links -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+</body>
+</html>
